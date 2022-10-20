@@ -28,7 +28,7 @@
 			{# {{ encore_entry_script_tags('app') }} #}
 		{% endblock %}
 	</head>
-	<body>
+	<body style="background-color: #e3f2fd;">
 		<section class="navbar custom-navbar navbar-fixed-top" role="navigation" >
 			<div class="container">
 
@@ -53,13 +53,10 @@
 							<a href="{{ path('app_about')}}" class="smoothScroll">About</a>
 						</li>
 						<li>
-							<a href="#team" class="smoothScroll">Chef</a>
-						</li>
-						<li>
 							<a href="{{ path('app_menu')}}" class="smoothScroll">Menu</a>
 						</li>
 						<li>
-							<a href="#contact" class="smoothScroll">Contact</a>
+							<a href="{{path('app_panier')}}" class="smoothScroll">Mon panier</a>
 						</li>
 					</ul>
 
