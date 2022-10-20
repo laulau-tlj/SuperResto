@@ -16,14 +16,6 @@ class HomeController extends AbstractController
         ]);
     }
 
-    #[Route('/menu', name: 'app_menu')]
-    public function menu(): Response
-    {
-        return $this->render('home/menu.html.twig', [
-            'controller_name' => 'HomeController',
-        ]);
-    }
-
     #[Route('/about', name: 'app_about')]
     public function about(): Response
     {
