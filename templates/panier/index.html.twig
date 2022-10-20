@@ -6,11 +6,29 @@
     <h1>Vos commandes</h1>
     {% if commandes %}
         {% for commande in commandes %}
-            <ul>
-                <li>
-                    {{commande.}}
-                </li>
-            </ul>
+            <table class="table">
+                <thead>
+                    <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">First</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                    <th scope="row">1</th>
+                    <td>Mark</td>
+                    
+                    </tr>
+                    <tr>
+                    <th scope="row">2</th>
+                    <td>Jacob</td>
+                    </tr>
+                    <tr>
+                    <th scope="row">3</th>
+                    <td colspan="2">Larry the Bird</td>
+                    </tr>
+                </tbody>
+            </table>
         {% endfor %}
     {% else %}
         <h2 class="text-danger">Vous n'avez aucune commandes en cours</h2>
