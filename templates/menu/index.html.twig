@@ -2,9 +2,9 @@
 
 {% block title %}Page Menu{% endblock %}
 
-{% block body %}
+{% block body  %}
 <!-- MENU-->
-     <section id="menu" data-stellar-background-ratio="0.5">
+     <section id="menu" data-stellar-background-ratio="0.5" style="background-color: #e3f2fd;">
           <div class="container">
                <div class="row">
 
@@ -15,7 +15,35 @@
                          </div>
                     </div>
 
-                    <div class="col-md-4 col-sm-6">
+                    {% if menus %}
+                         {% for plat in menus %}
+                              <div class="col-md-4 col-sm-6">
+                                   <!-- MENU THUMB -->
+                                   <div class="menu-thumb">
+                                        <a href="{{plat.image}}" class="image-popup" title="American Breakfast">
+                                             <img src="{{plat.image}}" class="img-responsive" alt="">
+
+                                             <div class="menu-info">
+                                                  <div class="menu-item">
+                                                       <h3>{{plat.nom}}</h3>
+                                                       <p>{{plat.description}}</p>
+                                                  </div>
+                                                  <div class="menu-price">
+                                                       <span>{{plat.prix}}$</span>
+                                                  </div>
+                                                  <div class="menu-price">
+                                                       <a href="{{ path('app_panier')}}" class="section-btn">Commander</a>
+                                                  </div>
+                                             </div>
+                                        </a>
+                                   </div>
+                              </div>
+                         {% endfor %}
+                    {% else %}
+                         <h2 class="text-danger">Aucun plat disponible</h2>
+                    {% endif %}
+
+                    {# <div class="col-md-4 col-sm-6">
                          <!-- MENU THUMB -->
                          <div class="menu-thumb">
                               <a href="{{asset('assets/images/menu-image1.jpg')}}" class="image-popup" title="American Breakfast">
@@ -127,7 +155,7 @@
                                    </div>
                               </a>
                          </div>
-                    </div>
+                    </div> #}
 
 
                </div>
