@@ -16,7 +16,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 #[Route('/res', name: "app_", methods: ['GET'])]
 class ReservationController extends AbstractController
 {
-    private const REDIRECT = "/res";
+    private const REDIRECT = "app_menu";
 
     private ReservationRepository $repository;
 
@@ -26,7 +26,26 @@ class ReservationController extends AbstractController
         $this->repository = $manager->getRepository(Reservation::class);
     }
 
-    #[Route('/', name: 'res')]
+    #[Route('/', name: 'res', methods: ['GET', 'POST'])]
+    public function add(Request $request): Response
+    {
+        $reservation = new Reservation;
+        $form = $this->createForm(ReservationType::class, $reservation);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $reservation->setStatut(0);
+            $this->repository->save($reservation, true);
+            $this->addFlash('success', "La demande de réservation a été enregistré.");
+            return $this->redirectToRoute(self::REDIRECT);
+        }
+
+        return $this->renderForm("reservation/index.html.twig", [
+            'form' => $form
+        ]);
+    }
+
+    #[Route('/show', name: 'show')]
     public function index(): Response
     {
         return $this->render('post/index.html.twig', [
@@ -49,24 +68,6 @@ class ReservationController extends AbstractController
         ]);
     }
 
-    #[Route('/add', name: 'add', methods: ['GET', 'POST'])]
-    public function add(Request $request): Response
-    {
-        $reservation = new Reservation;
-        $form = $this->createForm(ReservationType::class, $reservation);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $reservation->setStatut(0);
-            $this->repository->save($reservation, true);
-            $this->addFlash('success', "La demande de réservation a été enregistré.");
-            return $this->redirectToRoute(self::REDIRECT);
-        }
-
-        return $this->renderForm("reservation/index.html.twig", [
-            'form' => $form
-        ]);
-    }
 
     #[Route('/{id}/update', name: 'update', methods: ['GET', 'POST'], requirements: ['id' => "\d+"])]
     #[IsGranted("ROLE_ADMIN", message: "Vous n'avez pas les droits", statusCode: 403)]

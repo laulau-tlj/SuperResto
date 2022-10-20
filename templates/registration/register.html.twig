@@ -15,7 +15,7 @@
 	{{ form_row(registrationForm.nom) }}
 	{{ form_row(registrationForm.telephone) }}
 	{% if app.user %}
-		{% if app.user.isGranted("ROLE_ADMIN") %}
+		{% if app.user.roles[0]=="ROLE_ADMIN" %}
 			{{ form_row(registrationForm.roles) }}
 		{% endif %}
 	{% endif %}

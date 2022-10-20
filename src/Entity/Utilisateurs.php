@@ -36,9 +36,6 @@ class Utilisateurs implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 20)]
     private ?string $telephone = null;
 
-    #[ORM\Column(type: Types::SMALLINT)]
-    private ?int $type = null;
-
     #[ORM\Column(type: 'boolean')]
     private $isVerified = false;
 
