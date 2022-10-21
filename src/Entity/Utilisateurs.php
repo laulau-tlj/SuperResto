@@ -156,4 +156,9 @@ class Utilisateurs implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    public function isIsVerified(): ?bool
+    {
+        return $this->isVerified;
+    }
 }

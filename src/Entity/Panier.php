@@ -2,10 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\PanierRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use App\Entity\Utilisateurs;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\PanierRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 #[ORM\Entity(repositoryClass: PanierRepository::class)]
 class Panier
@@ -62,12 +63,12 @@ class Panier
         return $this;
     }
 
-    public function getUtilisateur(): ?utilisateur
+    public function getUtilisateur(): ?Utilisateurs
     {
         return $this->utilisateur;
     }
 
-    public function setUtilisateur(utilisateur $utilisateur): self
+    public function setUtilisateur(Utilisateurs $utilisateur): self
     {
         $this->utilisateur = $utilisateur;
 

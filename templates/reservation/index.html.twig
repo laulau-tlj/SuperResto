@@ -1,5 +1,6 @@
 {% extends "base.html.twig" %}
-
+{% block title %}Reservation
+{% endblock %}
 {% block body %}
 	<h1>Demande de reservation</h1>
 	{% include "reservation/_form.html.twig" with {form:form, postSubmit:"Ajouter"} %}

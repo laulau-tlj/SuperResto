@@ -11,21 +11,21 @@ class Menu
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column]
+    #[ORM\Column(type:'integer')]
     private ?int $id = null;
 
-    #[ORM\Column(length: 60)]
+    #[ORM\Column(length: 60, unique:true)]
     private ?string $nom = null;
 
     #[ORM\Column]
     private ?int $prix = null;
 
+    #[ORM\Column]
+    private ?string $image = null;
+
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
-    #[ORM\ManyToOne(inversedBy: 'menu')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Panier $panier = null;
 
     public function getId(): ?int
     {
@@ -68,14 +68,26 @@ class Menu
         return $this;
     }
 
-    public function getPanier(): ?Panier
+    /**
+     * Get the value of image
+     *
+     * @return ?string
+     */
+    public function getImage(): ?string
     {
-        return $this->panier;
+        return $this->image;
     }
 
-    public function setPanier(?Panier $panier): self
+    /**
+     * Set the value of image
+     *
+     * @param ?string $image
+     *
+     * @return self
+     */
+    public function setImage(?string $image): self
     {
-        $this->panier = $panier;
+        $this->image = $image;
 
         return $this;
     }

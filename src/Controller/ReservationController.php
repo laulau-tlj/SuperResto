@@ -45,29 +45,6 @@ class ReservationController extends AbstractController
         ]);
     }
 
-    #[Route('/show', name: 'show')]
-    public function index(): Response
-    {
-        return $this->render('post/index.html.twig', [
-            'posts' => $this->repository->findAll()
-        ]);
-    }
-
-    #[Route('/{id}', name: 'show', requirements: ['id' => "\d+"])]
-    public function show(int $id): Response
-    {
-        $reservation = $this->repository->find($id);
-        if (!$reservation) {
-            $this->addFlash('danger', "La demande que vous recherchez n'existe pas.");
-
-            return $this->redirectToRoute(self::REDIRECT);
-        }
-
-        return $this->render("post/show.html.twig", [
-            'reservation' => $reservation
-        ]);
-    }
-
 
     #[Route('/{id}/update', name: 'update', methods: ['GET', 'POST'], requirements: ['id' => "\d+"])]
     #[IsGranted("ROLE_ADMIN", message: "Vous n'avez pas les droits", statusCode: 403)]
@@ -94,6 +71,7 @@ class ReservationController extends AbstractController
     }
 
     #[Route('/{id}/delete', name: "delete", requirements: ['id' => "\d+"])]
+    #[IsGranted("ROLE_ADMIN", message: "Vous n'avez pas les droits", statusCode: 403)]
     public function delete(int $id): Response
     {
         $post = $this->repository->find($id);
