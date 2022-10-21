@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\ReservationRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ReservationRepository::class)]
 class Reservation
@@ -15,19 +16,39 @@ class Reservation
     private ?int $id = null;
 
     #[ORM\Column(length: 60)]
+    #[Assert\NotBlank(message: "Le champs {{ label }} ne peut pas être vide")]
+    #[Assert\Length(
+        min: 1,
+        minMessage: "Le champ nom doit faire au minimum {{ limit }} caractères",
+        max: 30,
+        maxMessage: "Le champ nom ne peut excéder {{ limit }} caractères."
+    )]
     private ?string $nom = null;
 
-    #[ORM\Column]
-    private ?int $telephone = null;
+    #[ORM\Column(length: 20)]
+    #[Assert\NotBlank(message: "Le champs {{ label }} ne peut pas être vide")]
+    #[Assert\Length(
+        min: 8,
+        minMessage: "Le champ téléphone doit avoir au minimum {{ limit }} caractères",
+        max: 20,
+        maxMessage: "Le champ téléphone doit avoir au maximum {{ limit }} caractères."
+    )]
+    private ?string $telephone = null;
 
-    #[ORM\Column(length: 100)]
+    #[ORM\Column(length: 70)]
+    #[Assert\NotBlank(message: "Le champs {{ label }} ne peut pas être vide")]
+    #[Assert\Email(message: 'L\'adresse mail "{{ value }}" n\'est pas valid.')]
     private ?string $mail = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $date = null;
 
-    #[ORM\Column]
+    #[ORM\Column(type: Types::SMALLINT)]
+    #[Assert\Positive(message: 'Le nombre de personne doit être plus grand que 0')]
     private ?int $nbre = null;
+
+    #[ORM\Column(type: Types::SMALLINT)]
+    private ?int $statut = null;
 
     public function getId(): ?int
     {
@@ -46,12 +67,12 @@ class Reservation
         return $this;
     }
 
-    public function getTelephone(): ?int
+    public function getTelephone(): ?string
     {
         return $this->telephone;
     }
 
-    public function setTelephone(int $telephone): self
+    public function setTelephone(string $telephone): self
     {
         $this->telephone = $telephone;
 
@@ -90,6 +111,18 @@ class Reservation
     public function setNbre(int $nbre): self
     {
         $this->nbre = $nbre;
+
+        return $this;
+    }
+
+    public function getStatut(): ?int
+    {
+        return $this->statut;
+    }
+
+    public function setStatut(int $statut): self
+    {
+        $this->statut = $statut;
 
         return $this;
     }

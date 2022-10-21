@@ -1,0 +1,29 @@
+{{ form_start(form) }}
+<div class="mb-3">
+	{{form_label(form.nom)}}
+	{{form_widget(form.nom)}}
+</div>
+<div class="mb-3">
+	{{form_label(form.telephone)}}
+	{{form_widget(form.telephone)}}
+</div>
+<div class="mb-3">
+	{{form_label(form.mail)}}
+	{{form_widget(form.mail)}}
+</div>
+<div class="mb-3">
+	{{form_label(form.date)}}
+	{{form_widget(form.date)}}
+</div>
+<div class="mb-3">
+	{{form_label(form.nbre)}}
+	{{form_widget(form.nbre)}}
+</div>
+
+{{form_row(form.submit, {'label': postSubmit|default('Ajouter')})}}
+
+<div class="form-error">
+	{{ form_errors(form, {'attr': {'class': 'text-danger'}})}}
+</div>
+
+{{ form_end(form) }}
