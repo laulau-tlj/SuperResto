@@ -3,6 +3,32 @@
 {% block title %}Page Panier{% endblock %}
 
 {% block body %}
+     <div style="margin-top: 14%;">
+          
+          <table class="table">
+               <thead>
+               <tr>
+                    <th scope="col">Nom</th>
+                    <th scope="col">Prix</th>
+                    
+               </tr>
+               </thead>
+               <tbody>
+               {% for panier in paniers %}
+                    {% for menu in panier.menus %}
+                         <tr>
+                              <td>{{menu.nom}}</td>
+                              <td>{{menu.prix}}$</td>
+                         </tr>
+                         {% endfor %}
+                    {% else %}
+                         <h2>Vous n'avez rien commandé</h2>
+               {% endfor %}
+               
+               </tbody>
+          </table>
+               
+     </div>
 <footer id="footer" data-stellar-background-ratio="0.5">
           <div class="container">
                <div class="row">

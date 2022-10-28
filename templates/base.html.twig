@@ -42,6 +42,8 @@
 					<a href="{{path('app_home')}}" class="navbar-brand">Super<span>.</span>Resto</a>
 				</div>
 
+				
+
 				<!-- MENU LINKS -->
 				<div class="collapse navbar-collapse">
 					<ul class="nav navbar-nav navbar-nav-first">
@@ -57,13 +59,58 @@
 						<li>
 							<a href="{{path('app_panier')}}" class="smoothScroll">Mon panier</a>
 						</li>
+						{# Accès utilisateur #}
+						{% if app.user %}
+
+                            {% if app.user.roles[0] == "ROLE_ADMIN" %}
+
+
+
+                                <li class="nav-item">
+
+                                    <a class="nav-link active" aria-current="page" href="{{ path('app_admin')}}">Administration</a>
+
+                                </li>
+
+                            {% endif %}
+
+                        {% endif %}
+						{# Vérifie si il est connecté  #}
+						{% if app.user %}
+
+                            <li class="nav-item">
+
+                                <a class="nav-link active" aria-current="page" href="{{ path('app_logout')}}">Déconnexion</a>
+
+                            </li>
+
+                            {% if app.user.roles[0] == "ROLE_ADMIN" %}
+
+                                <li class="nav-item">
+
+                                    <a class="nav-link active" aria-current="page" href="{{ path('app_register')}}">Inscription</a>
+
+                                </li>
+                            {% endif %}
+							
+						{% else %}
+
+                            <li class="nav-item">
+
+                                <a class="nav-link active" aria-current="page" href="{{ path('app_login')}}">Connexion</a>
+
+                            </li>
+
+                            <li class="nav-item">
+
+                                <a class="nav-link active" aria-current="page" href="{{ path('app_register')}}">Inscription</a>
+
+                            </li>
+						{% endif %}
 					</ul>
 
 					<ul class="nav navbar-nav navbar-right">
-						<li>
-							<a href="#">Se connecter</a>
-						</li>
-						<a href="{{ path('app_reservation')}}" class="section-btn">Réserver une table</a>
+						<a href="{{path('app_res')}}" class="section-btn">Réserver une table</a>
 					</ul>
 				</div>
 

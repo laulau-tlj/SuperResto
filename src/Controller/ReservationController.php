@@ -45,45 +45,22 @@ class ReservationController extends AbstractController
         ]);
     }
 
-    #[Route('/show', name: 'show')]
-    public function index(): Response
-    {
-        return $this->render('post/index.html.twig', [
-            'posts' => $this->repository->findAll()
-        ]);
-    }
 
-    #[Route('/{id}', name: 'show', requirements: ['id' => "\d+"])]
-    public function show(int $id): Response
-    {
-        $reservation = $this->repository->find($id);
-        if (!$reservation) {
-            $this->addFlash('danger', "La demande que vous recherchez n'existe pas.");
-
-            return $this->redirectToRoute(self::REDIRECT);
-        }
-
-        return $this->render("post/show.html.twig", [
-            'reservation' => $reservation
-        ]);
-    }
-
-
-    #[Route('/{id}/update', name: 'update', methods: ['GET', 'POST'], requirements: ['id' => "\d+"])]
+    #[Route('/{id}/update', name: 'resupdate', methods: ['GET', 'POST'], requirements: ['id' => "\d+"])]
     #[IsGranted("ROLE_ADMIN", message: "Vous n'avez pas les droits", statusCode: 403)]
     public function update(int $id, Request $request): Response
     {
-        $post = $this->repository->find($id);
-        if (!$post) {
+        $res = $this->repository->find($id);
+        if (!$res) {
             $this->addFlash('danger', "La demande que vous recherchez n'existe pas.");
             return $this->redirectToRoute(self::REDIRECT);
         }
 
-        $form = $this->createForm(PostType::class, $post);
+        $form = $this->createForm(PostType::class, $res);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->repository->save($post, true);
+            $this->repository->save($res, true);
             $this->addFlash('success', "La demande a été décider.");
             return $this->redirectToRoute(self::REDIRECT);
         }
@@ -93,15 +70,16 @@ class ReservationController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/delete', name: "delete", requirements: ['id' => "\d+"])]
+    #[Route('/{id}/delete', name: "resdelete", requirements: ['id' => "\d+"])]
+    #[IsGranted("ROLE_ADMIN", message: "Vous n'avez pas les droits", statusCode: 403)]
     public function delete(int $id): Response
     {
-        $post = $this->repository->find($id);
-        if ($post) {
-            $this->repository->remove($post, true);
+        $res = $this->repository->find($id);
+        if ($res) {
+            $this->repository->remove($res, true);
         } else {
-            $this->addFlash('danger', "La demande que vous recherchez n'existe pas.");
+            $this->addFlash('danger', "La demande n'existe pas.");
         }
-        return $this->redirectToRoute(self::REDIRECT);
+        return $this->redirectToRoute("app_admin");
     }
 }

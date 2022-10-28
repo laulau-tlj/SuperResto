@@ -2,10 +2,12 @@
 
 namespace App\Entity;
 
-use App\Repository\PanierRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use App\Entity\Menu;
+use App\Entity\Utilisateurs;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\PanierRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 #[ORM\Entity(repositoryClass: PanierRepository::class)]
 class Panier
@@ -15,16 +17,21 @@ class Panier
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\OneToMany(mappedBy: 'panier', targetEntity: menu::class, orphanRemoval: true)]
-    private Collection $menu;
+    
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    #[ORM\ManyToMany(targetEntity: Menu::class, inversedBy: 'paniers')]
+    private Collection $menus;
+
+    #[ORM\ManyToOne(inversedBy: 'paniers')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?utilisateur $utilisateur = null;
+    private ?Utilisateurs $utilisateur = null;
+
+    
 
     public function __construct()
     {
         $this->menu = new ArrayCollection();
+        $this->menus = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -32,45 +39,44 @@ class Panier
         return $this->id;
     }
 
+
     /**
-     * @return Collection<int, menu>
+     * @return Collection<int, Menu>
      */
-    public function getMenu(): Collection
+    public function getMenus(): Collection
     {
-        return $this->menu;
+        return $this->menus;
     }
 
-    public function addMenu(menu $menu): self
+    public function addMenu(Menu $menu): self
     {
-        if (!$this->menu->contains($menu)) {
-            $this->menu->add($menu);
-            $menu->setPanier($this);
+        if (!$this->menus->contains($menu)) {
+            $this->menus->add($menu);
         }
 
         return $this;
     }
 
-    public function removeMenu(menu $menu): self
+    public function removeMenu(Menu $menu): self
     {
-        if ($this->menu->removeElement($menu)) {
-            // set the owning side to null (unless already changed)
-            if ($menu->getPanier() === $this) {
-                $menu->setPanier(null);
-            }
-        }
+        $this->menus->removeElement($menu);
 
         return $this;
     }
 
-    public function getUtilisateur(): ?utilisateur
+    public function getUtilisateur(): ?Utilisateurs
     {
         return $this->utilisateur;
     }
 
-    public function setUtilisateur(utilisateur $utilisateur): self
+    public function setUtilisateur(?Utilisateurs $utilisateur): self
     {
         $this->utilisateur = $utilisateur;
 
         return $this;
     }
+
+   
+
+   
 }

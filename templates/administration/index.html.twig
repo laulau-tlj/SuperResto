@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+{% block title %}Administration
+{% endblock %}
+{% block body %}
+	<h1 style="margin-top: 14%;">Administration</h1>
+	<h2>Commandes</h2>
+	<table class="table table-striped table-hover">
+		<thead>
+			<tr>
+				<th>#</th>
+				<th>Titre</th>
+			</tr>
+		</thead>
+		<tbody>
+		</tbody>
+	</table>
+	<h2>Reservation</h2>
+	<table class="table table-striped table-hover">
+		<thead>
+			<tr>
+				<th>Nom</th>
+				<th>Telephone</th>
+				<th>Mail</th>
+				<th>Date</th>
+				<th>Nombre de personne</th>
+				<th>Options</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for res in reservation %}
+				<tr>
+					<td>{{ res.nom }}</td>
+					<td>{{ res.telephone }}</td>
+					<td>{{ res.mail }}</td>
+					<td>{{ res.date|format_date('medium', locale='fr') }}</td>
+					<td>{{ res.nbre }}</td>
+					<td>
+						<a href="{{ path('app_resdelete', {id: res.id}) }}">
+							<button class="btn btn-danger" onclick="alert('Etes-vous sûr de vouloir supprimer?')">Refuser</button>
+						</a>
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="2">Il n'y a pas de reservation pour le moments</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	<h2>Plats</h2>
+{% endblock %}
