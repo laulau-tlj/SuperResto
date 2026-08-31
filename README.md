@@ -13,14 +13,12 @@ Site de réservation en ligne pour restaurant, réalisé en groupe.
 - HTML / CSS
 
 ## Mon rôle
-[à compléter : ex. "Développement du système de réservation" / "Gestion de la base de données"]
+- Création du projet
+- Configuration du projet
+- Push sur github
+- Répartition des tâches
 
-## Aperçu
-[Ajoute une capture d'écran ici si possible — ça change tout visuellement]
 
 ## Installation
-\`\`\`bash
 git clone https://github.com/laulau-tlj/SuperResto.git
 cd SuperResto
-# étapes d'installation (config base de données, etc.)
-\`\`\`
